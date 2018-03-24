@@ -1,0 +1,14 @@
+{
+  "name": "Calculator",
+  "category": "office",
+  "title": {
+    "en_EN": "Calculator"
+  },
+  "description": {
+    "en_EN": "Calculator"
+  },
+  "files": [
+    "index.js",
+    "index.css"
+  ]
+}
