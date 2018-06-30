@@ -28,7 +28,7 @@
  * @licence Simplified BSD License
  */
 import {app, h} from 'hyperapp';
-import {Box, BoxContainer, Input, Button} from '@osjs/gui';
+import {Box, BoxContainer, TextField, Button} from '@osjs/gui';
 
 const buttons = [
   [
@@ -136,15 +136,19 @@ const createButtons = actions => buttons
   }, group.map(button => h(Button, {
     'data-button': button.name,
     label: button.label,
+    box: {
+      grow: 1,
+      shrink: 1
+    },
     onclick: ev => actions.press({button, ev})
   }))));
 
 const view = (state, actions) => h(Box, {orientation: 'horizontal'}, [
-  h(BoxContainer, {shrink: 1}, h(Input, {
+  h(TextField, {
     class: 'osjs-calculator-output',
     value: String(state.output),
     readOnly: true
-  })),
+  }),
   ...createButtons(actions)
 ]);
 
