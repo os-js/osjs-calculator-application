@@ -172,6 +172,7 @@ OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata
 
   proc.createWindow({
     title: metadata.title.en_EN,
+    icon: proc.resource(metadata.icon),
     dimension: {width: 300, height: 500}
   })
     .on('destroy', () => proc.destroy())
