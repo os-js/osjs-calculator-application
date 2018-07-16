@@ -161,6 +161,7 @@ const createButtons = actions => buttons
     shrink: 1
   }, group.map(button => h(Button, {
     'data-button': button.name,
+    'data-label': button.label,
     label: button.label,
     box: {
       grow: 1,
@@ -178,10 +179,10 @@ const view = (state, actions) => h(Box, {orientation: 'horizontal'}, [
   ...createButtons(actions)
 ]);
 
-const createApplication = ($content, win) => {
+const createApplication = ($content, win, proc) => {
   const calc = calculator();
 
-  return app({
+  const a = app({
     output: '0'
   }, {
     press: ({button}) => state => {
@@ -189,6 +190,13 @@ const createApplication = ($content, win) => {
       return {output: String(calc.output())};
     }
   }, view, $content);
+
+  win.on('keypress', ({key}) => {
+    const found = win.$element.querySelector(`[data-label="${key}"]`);
+    if (found) {
+      found.click();
+    }
+  })
 };
 
 OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata) => {
@@ -205,7 +213,7 @@ OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata
     dimension: {width: 300, height: 500}
   })
     .on('destroy', () => proc.destroy())
-    .render(createApplication);
+    .render(($content, win) => createApplication($content, win, proc));
 
   return proc;
 });
