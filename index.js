@@ -35,13 +35,13 @@ const buttons = [
     {name: 'ce', label: 'CE'},
     {name: 'ac', label: 'AC'},
     {name: 'percent', label: '%'},
-    {name: 'plus', label: '+'}
+    {name: 'addition', label: '+'}
   ],
   [
     {name: 7, label: '7'},
     {name: 8, label: '8'},
     {name: 9, label: '9'},
-    {name: 'minus', label: '-'},
+    {name: 'subtract', label: '-'},
   ],
   [
     {name: 4, label: '4'},
@@ -62,70 +62,96 @@ const buttons = [
   ]
 ];
 
-const createAnswer = entries => {
-  let nt = entries[0];
+const calculator = () => {
+  let entries = [];
+  let output = '';
+  let current = null;
 
-  for (let i = 1; i < entries.length; i++) {
-    const nextNum = entries[i + 1];
-    const operation = entries[i];
-    if (operation === 'plus') {
-      nt += nextNum;
-    } else if (operation === 'minus') {
-      nt -= nextNum;
-    } else if (operation === 'multiply') {
-      nt *= nextNum;
-    } else if (operation === 'divide') {
-      nt /= nextNum;
+  const operators = [
+    // Precendece ordered
+    {
+      divide: (a, b) => a / b,
+      multiply: (a, b) => a * b
+    },
+    {
+      addition: (a, b) => a + b,
+      subtract: (a, b) => a - b
     }
-    i++;
-  }
+  ];
 
-  return nt;
-};
+  const answer = () => {
+    let op;
+    let solve = [...entries];
+    let resolve = [];
 
-const createState = (button, state) => {
-  let {entries, current, output} = state;
+    for (let i = 0; i < operators.length; i++) {
+      for (let j = 0; j < solve.length; j++) {
+        if (operators[i][solve[j]]) {
+          op = operators[i][solve[j]];
+        } else if (op) {
+          resolve[resolve.length - 1] = op(
+            resolve[resolve.length - 1],
+            solve[j]
+          );
 
-  switch (button.name) {
-    case 'ac':
-      entries = [];
-      current = null;
-      output = 0;
-      break;
+          op = null;
+        } else {
+          resolve.push(solve[j]);
+        }
+      }
 
-    case 'ce':
-      current = null;
-      break;
+      solve = resolve;
+      resolve = [];
+    }
 
-    case 'equal':
-      if (current !== null) {
-        entries.push(current);
-        current = output = createAnswer(entries);
+    return solve.length > 1 ? Number.NaN : solve[0];
+  };
+
+  const operation = op => {
+    switch (op) {
+      case 'ac':
         entries = [];
-      }
-      break;
+        current = null;
+        output = 0;
+        break;
 
-    case 'decimal':
-      if (String(output).indexOf('.') === -1) {
-        output = current = String(output) + '.';
-      }
-      break;
+      case 'ce':
+        current = null;
+        break;
 
-    default:
-      if (typeof button.name === 'number') {
-        const val = current === null ? button.name : parseFloat([current, button.name].join(''), 10);
-        current = output = val;
-      } else {
+      case 'equal':
         if (current !== null) {
           entries.push(current);
-          entries.push(button.name);
+          current = output = answer();
+          entries = [];
         }
-        current = null;
-      }
-      break;
-  }
+        break;
 
-  return {entries, current, output};
+      case 'decimal':
+        if (String(output).indexOf('.') === -1) {
+          output = current = String(output) + '.';
+        }
+        break;
+
+      default:
+        if (typeof op === 'number') {
+          const val = current === null ? op : parseFloat([current, op].join(''), 10);
+          current = output = val;
+        } else {
+          if (current !== null) {
+            entries.push(current);
+            entries.push(op);
+          }
+          current = null;
+        }
+        break;
+    }
+  };
+
+  return {
+    output: () => output,
+    op: op => operation(op)
+  };
 };
 
 const createButtons = actions => buttons
@@ -153,12 +179,15 @@ const view = (state, actions) => h(Box, {orientation: 'horizontal'}, [
 ]);
 
 const createApplication = ($content, win) => {
+  const calc = calculator();
+
   return app({
-    entries: [],
-    current: null,
-    output: 0
+    output: '0'
   }, {
-    press: ({button}) => state => createState(button, state)
+    press: ({button}) => state => {
+      calc.op(button.name);
+      return {output: String(calc.output())};
+    }
   }, view, $content);
 };
 
