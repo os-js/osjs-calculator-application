@@ -109,42 +109,42 @@ const calculator = () => {
 
   const operation = op => {
     switch (op) {
-      case 'ac':
+    case 'ac':
+      entries = [];
+      current = null;
+      output = 0;
+      break;
+
+    case 'ce':
+      current = null;
+      break;
+
+    case 'equal':
+      if (current !== null) {
+        entries.push(current);
+        current = output = answer();
         entries = [];
-        current = null;
-        output = 0;
-        break;
+      }
+      break;
 
-      case 'ce':
-        current = null;
-        break;
+    case 'decimal':
+      if (String(output).indexOf('.') === -1) {
+        output = current = String(output) + '.';
+      }
+      break;
 
-      case 'equal':
+    default:
+      if (typeof op === 'number') {
+        const val = current === null ? op : parseFloat([current, op].join(''), 10);
+        current = output = val;
+      } else {
         if (current !== null) {
           entries.push(current);
-          current = output = answer();
-          entries = [];
+          entries.push(op);
         }
-        break;
-
-      case 'decimal':
-        if (String(output).indexOf('.') === -1) {
-          output = current = String(output) + '.';
-        }
-        break;
-
-      default:
-        if (typeof op === 'number') {
-          const val = current === null ? op : parseFloat([current, op].join(''), 10);
-          current = output = val;
-        } else {
-          if (current !== null) {
-            entries.push(current);
-            entries.push(op);
-          }
-          current = null;
-        }
-        break;
+        current = null;
+      }
+      break;
     }
   };
 
@@ -182,7 +182,7 @@ const view = (state, actions) => h(Box, {orientation: 'horizontal'}, [
 const createApplication = ($content, win, proc) => {
   const calc = calculator();
 
-  const a = app({
+  app({
     output: '0'
   }, {
     press: ({button}) => state => {
@@ -196,7 +196,7 @@ const createApplication = ($content, win, proc) => {
     if (found) {
       found.click();
     }
-  })
+  });
 };
 
 OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata) => {
