@@ -1,7 +1,7 @@
 {
   "name": "@osjs/calculator-application",
   "version": "1.1.0",
-  "description": "OS.js v3 calculator Application",
+  "description": "OS.js v3 Calculator Application",
   "files": [
     "dist/",
     "metadata.json"
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/os-js/osjs-calculator-package.git"
+    "url": "git+https://github.com/os-js/osjs-calculator-application.git"
   },
   "keywords": [
     "osjs"
@@ -25,9 +25,9 @@
   "author": "Anders Evenrud <andersevenrud@gmail.com>",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/os-js/osjs-calculator-package/issues"
+    "url": "https://github.com/os-js/osjs-calculator-application/issues"
   },
-  "homepage": "https://github.com/os-js/osjs-calculator-package#readme",
+  "homepage": "https://github.com/os-js/osjs-calculator-application#readme",
   "osjs": {
     "type": "package"
   },
