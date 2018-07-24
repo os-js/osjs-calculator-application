@@ -18,5 +18,4 @@ This is the Calculator Package for OS.js v3
 ```bash
 npm install --save @osjs/calculator-application
 npm run package:discover
-npm run build:manifest
 ```
