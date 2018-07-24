@@ -27,6 +27,8 @@
  * @author  Anders Evenrud <andersevenrud@gmail.com>
  * @licence Simplified BSD License
  */
+
+import './index.scss';
 import {app, h} from 'hyperapp';
 import {Box, BoxContainer, TextField, Button} from '@osjs/gui';
 

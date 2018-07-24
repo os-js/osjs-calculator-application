@@ -9,7 +9,7 @@
     "en_EN": "Calculator"
   },
   "files": [
-    "index.js",
-    "index.css"
+    "main.js",
+    "main.css"
   ]
 }
