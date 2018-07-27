@@ -199,6 +199,8 @@ const createApplication = ($content, win, proc) => {
       found.click();
     }
   });
+
+  win.focus();
 };
 
 OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata) => {
