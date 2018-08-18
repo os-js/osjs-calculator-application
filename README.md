@@ -13,6 +13,8 @@
 
 This is the Calculator Package for OS.js v3
 
+![Screenshot](./screenshot.png)
+
 ## Installation
 
 ```bash
