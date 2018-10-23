@@ -4,10 +4,12 @@
   "icon": "icon.png",
   "title": {
     "en_EN": "Calculator",
+    "nb_NO": "Kalkulator",
     "fr_FR": "Calculatrice"
   },
   "description": {
     "en_EN": "Calculator",
+    "nb_NO": "Kalulator",
     "fr_FR": "Calculatrice"
   },
   "files": [
