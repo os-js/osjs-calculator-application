@@ -30,7 +30,7 @@
 
 import './index.scss';
 import {app, h} from 'hyperapp';
-import {Box, BoxContainer, TextField, Button} from '@osjs/gui/index.js';
+import {Box, BoxContainer, TextField, Button} from '@osjs/gui';
 
 const buttons = [
   [
