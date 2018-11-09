@@ -193,7 +193,7 @@ const createApplication = ($content, win, proc) => {
     }
   }, view, $content);
 
-  win.on('keypress', (w, {key}) => {
+  win.on('keypress', ({key}) => {
     const found = win.$element.querySelector(`[data-label="${key}"]`);
     if (found) {
       found.click();
