@@ -204,6 +204,8 @@ const createApplication = ($content, win, proc) => {
 };
 
 OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata) => {
+  const title = core.make('osjs/locale')
+    .translatableFlat(metadata.title);
 
   const proc = core.make('osjs/application', {
     args,
@@ -212,7 +214,7 @@ OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata
   });
 
   proc.createWindow({
-    title: metadata.title.en_EN,
+    title,
     icon: proc.resource(metadata.icon),
     dimension: {width: 300, height: 500}
   })
