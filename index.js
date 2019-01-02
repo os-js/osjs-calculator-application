@@ -29,6 +29,8 @@
  */
 
 import './index.scss';
+import osjs from 'osjs';
+import {name as applicationName} from './metadata.json';
 import {app, h} from 'hyperapp';
 import {Box, BoxContainer, TextField, Button} from '@osjs/gui';
 
@@ -203,7 +205,7 @@ const createApplication = ($content, win, proc) => {
   win.focus();
 };
 
-OSjs.make('osjs/packages').register('Calculator', (core, args, options, metadata) => {
+osjs.register(applicationName, (core, args, options, metadata) => {
   const title = core.make('osjs/locale')
     .translatableFlat(metadata.title);
 
