@@ -52,5 +52,35 @@
     "stylelint-scss": "^3.14.2",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "extends": "@osjs/eslint-config"
+  },
+  "stylelint": {
+    "plugins": [
+      "stylelint-scss"
+    ],
+    "rules": {
+      "at-rule-no-unknown": [true, {
+        "ignoreAtRules": ["extend", "mixin", "include"]
+      }]
+    },
+    "extends": "stylelint-config-standard"
+  },
+  "babel": {
+    "presets": [
+      ["@babel/preset-env", {
+      }]
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime"
+    ]
   }
 }
